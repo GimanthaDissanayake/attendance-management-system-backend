@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/GimanthaDissanayake/attendance-management-system-backend/issues"
   },
-  "homepage": "https://github.com/GimanthaDissanayake/attendance-management-system-backend#readme"
+  "homepage": "https://github.com/GimanthaDissanayake/attendance-management-system-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
 }

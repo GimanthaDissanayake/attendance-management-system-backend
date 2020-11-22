@@ -1,0 +1,19 @@
+{
+  "name": "attendance-management-system-backend",
+  "version": "1.0.0",
+  "description": "```\r npm install\r ```",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GimanthaDissanayake/attendance-management-system-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GimanthaDissanayake/attendance-management-system-backend/issues"
+  },
+  "homepage": "https://github.com/GimanthaDissanayake/attendance-management-system-backend#readme"
+}

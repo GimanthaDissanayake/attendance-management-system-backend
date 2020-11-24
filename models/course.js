@@ -1,12 +1,9 @@
 const db = require('../util/database');
 
 module.exports = class Course {
-    constructor(courseCode, courseTitle, degreeProgram, dayOfWeek, time, departmentId) {
+    constructor(courseCode, courseTitle) {
         this.courseCode = courseCode;
         this.courseTitle = courseTitle;
-        this.degreeProgram = degreeProgram;
-        this.dayOfWeek = dayOfWeek;
-        this.time = time;
         this.departmentId = departmentId;
     }
 
@@ -31,11 +28,16 @@ module.exports = class Course {
 
     static findByCourseCode(courseCode) {
         //return a specific course from the database 
-        return db.execute('SELECT * FROM course WHERE course.id = ?', [courseCode]);
+        return db.execute('SELECT * FROM course WHERE course.icourd = ?', [courseCode]);
     }
 
     static findByCourseDepartmentId(departmentId) {
         //return a set of courses from the database by the departmentId 
-        return db.execute('SELECT * FROM course WHERE course.departmentId = ?', [departmentId]);
+        return db.execute('SELECT * FROM course WHERE course.department_id = ?', [departmentId]);
+    }
+
+    static findCurrentLevel() {
+        const currentYear = new Date().getFullYear();
+        return db.execute('SELECT course_code FROM course WHERE year = ?', [currentYear]);
     }
 };

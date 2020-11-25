@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 //import the routes 
 const studentRoutes = require('./routes/student');
 const courseRoutes = require('./routes/course');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
@@ -22,8 +23,8 @@ app.use((req, res, next) => {
 
 //middleware to handle routes
 app.use('/api/student', studentRoutes);
-
 app.use('/api/course', courseRoutes);
+app.use('/api/auth', authRoutes);
 
 //middleware to handle errors
 app.use((error, req, res, next) => {

@@ -4,7 +4,7 @@ const Course = require('../models/course');
 exports.getCourses = (req, res, next) => {
     //return all the courses as response
     Course.fetchAll().then( courses => {
-        res.status(200).json({courses: courses});
+        res.status(200).json({courses: courses[0]});
     })
     .catch(err => {
         if(!err.statusCode) {

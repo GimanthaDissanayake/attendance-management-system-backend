@@ -14,3 +14,5 @@ router.get('/:mentor_id', studentController.getStudentsByMentorId);
 
 // /student/:registration_no => GET
 router.get('/:registration_no', studentController.getStudent);
+
+module.exports = router;

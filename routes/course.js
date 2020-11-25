@@ -11,3 +11,5 @@ router.get('/', courseController.getCourses);
 
 // /course/:course_code => GET
 router.get('/:course_code', courseController.getCourse);
+
+module.exports = router;

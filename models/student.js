@@ -9,7 +9,8 @@ module.exports = class Student {
     }
 
     getCourses() {
-
+        //return all the courses the student is following
+        
     }
 
     getLevel() {

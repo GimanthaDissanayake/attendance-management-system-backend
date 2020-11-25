@@ -24,7 +24,7 @@ exports.getCourse = (req, res, next) => {
             error.statusCode = 400;
             throw error;
         }
-        res.status(200).json({course: course});
+        res.status(200).json({course: course[0]});
     })
     .catch(err => {
         if(!err.statusCode) {

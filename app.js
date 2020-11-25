@@ -21,9 +21,9 @@ app.use((req, res, next) => {
 });
 
 //middleware to handle routes
-app.use('/student', studentRoutes);
+app.use('/api/student', studentRoutes);
 
-app.use('/course', courseRoutes);
+app.use('/api/course', courseRoutes);
 
 //middleware to handle errors
 app.use((error, req, res, next) => {

@@ -12,23 +12,34 @@ module.exports = class Course {
         return this.courseCode.split('')[3];
     }
 
-    getSemester() {
-        //return the semester of the course
-        return this.courseCode.split('')[4];
-    }
+    
 
     getAttendancePercentage() {
         //return the eligiblity of the course
     }
+
+    // static getSemester(courseCode) {
+    //     //return the semester of the course
+    //     return courseCode.split('')[4];
+    // }
 
     static fetchAll() {
         //return all the courses from the database
         return db.execute('SELECT * FROM course');
     }
 
+    static findAllByStudentId(registrationNo) {
+        return db.execute('SELECT DISTINCT course.course_code, course.course_title FROM course, course_offering,register WHERE register.registration_no=? AND register.co_id=course_offering.co_id AND register.type=course_offering.type AND course.course_code=course_offering.course_code',[registrationNo]);
+    }
+
+    static findByStudentId(registrationNo){
+        const currentYear = new Date(). getFullYear();
+        return db.execute('SELECT DISTINCT course.course_code, course.course_title FROM course, course_offering,register WHERE register.registration_no=? AND course_offering.year=? AND register.co_id=course_offering.co_id AND register.type=course_offering.type AND course.course_code=course_offering.course_code',[registrationNo, currentYear]);
+    }
+
     static findByCourseCode(courseCode) {
         //return a specific course from the database 
-        return db.execute('SELECT * FROM course WHERE course.icourd = ?', [courseCode]);
+        return db.execute('SELECT * FROM course WHERE course.course_code = ?', [courseCode]);
     }
 
     static findByCourseDepartmentId(departmentId) {

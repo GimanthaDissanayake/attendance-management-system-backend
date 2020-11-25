@@ -19,4 +19,8 @@ module.exports = class CourseOffering {
         //return a specific course offering from the database 
         return db.execute('SELECT * FROM course WHERE course_offering.co_id = ?', [co_id]);
     }
+
+    static findByStudentId(studentId) {
+        // return db.execute('')
+    }
 };

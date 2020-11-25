@@ -12,15 +12,25 @@ const app = express();
 //use body parser to parse json data
 app.use(bodyParser.json());
 
-// const id = 'CSC3242';
-// console.log(id.split('')[3]);
+//set headers to handle CORS(Cross-Origin Resource Sharing) errors
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 
+//middleware to handle routes
 app.use('/student', studentRoutes);
 
 app.use('/course', courseRoutes);
 
-app.use('/', (req, res, next) => {
-    res.send('hello');
+//middleware to handle errors
+app.use((error, req, res, next) => {
+    console.log(error);
+    const status = error.statusCode || 500;
+    const message = error.message;
+    res.status(status).json({message: message});
 });
 
 //start the server on port 3030

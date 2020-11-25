@@ -2,7 +2,7 @@
 const express = require('express');
 
 //import course controller
-const courseController = require('../controllers/admin');
+const courseController = require('../controllers/course');
 
 const router = express.Router();
 
@@ -10,4 +10,4 @@ const router = express.Router();
 router.get('/', courseController.getCourses);
 
 // /course/:course_code => GET
-router.get('/:course_code', adminController.getCourse);
+router.get('/:course_code', courseController.getCourse);

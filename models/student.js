@@ -8,11 +8,12 @@ module.exports = class Student {
         this.mentorId = mentorId;
     }
 
+    getCourses() {
+
+    }
+
     getLevel() {
         //return the level of the student
-        const currentYear = new Date().getFullYear();
-        const level = currentYear-this.registrationNo.split('/')[1];
-        return level;
     }
 
     static fetchAll() {
@@ -20,13 +21,13 @@ module.exports = class Student {
         return db.execute('SELECT * FROM student');
     }
 
-    static findByCourseCode(registrationNo) {
+    static findByRegistrationNo(registrationNo) {
         //return a specific student from the database 
-        return db.execute('SELECT * FROM student WHERE student.registrationNo = ?', [registrationNo]);
+        return db.execute('SELECT * FROM student WHERE student.registration_no = ?', [registrationNo]);
     }
 
     static findByMentorId(mentorId) {
         //return a set of students from the database by their mentor id
-        return db.execute('SELECT * FROM student WHERE student.mentorId = ?', [mentorId]);
+        return db.execute('SELECT * FROM student WHERE student.mentor_id = ?', [mentorId]);
     }
 };

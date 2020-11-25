@@ -12,6 +12,9 @@ router.get('/mentor/:mentor_id', studentController.getStudentsByMentorId);
 // /api/student/courses
 router.get('/courses/', studentController.getStudentsCourses);
 
+// /api/student/all_courses
+router.get('/all_courses/', studentController.getAllStudentsCourses);
+
 // /api/student/:registration_no => GET
 router.get('/:registration_no', studentController.getStudent);
 

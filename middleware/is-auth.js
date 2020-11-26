@@ -10,7 +10,7 @@ headers: {
 module.exports = (req, res, next) => {
     const authHeader = req.get('Authorization');
     if(!authHeader) {
-        const error = new Error('Not Authenticated');
+        const error = new Error('Authorization header not set!');
         error.statusCode = 401;
         throw error;
     }

@@ -8,6 +8,7 @@ module.exports = class User {
     }
 
     static findOne(req){
+        //return a user with given username
         const username = req.username;
         return db.execute('SELECT * FROM users WHERE username=? LIMIT 1', [username]);
     }

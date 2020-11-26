@@ -1,5 +1,5 @@
 //import 3rd party packages
-const { validationResult} = require('express-validator');
+//const { validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -19,7 +19,6 @@ exports.login = (req, res, next) => {
             throw error;
         }
         loadedUser = user;
-        //console.log(user[0].BinaryRow.password);
         return bcrypt.compare(password, user.password);
     })
     .then(isEqual => {

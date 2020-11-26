@@ -6,4 +6,9 @@ module.exports = class User {
         this.password = password;
         this.role = role;
     }
+
+    static findOne(req){
+        const username = req.username;
+        return db.execute('SELECT * FROM users WHERE username=? LIMIT 1', [username]);
+    }
 };

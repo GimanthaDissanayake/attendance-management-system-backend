@@ -1,4 +1,4 @@
-//import course model
+//import models
 const Course = require('../models/course');
 
 exports.getCourses = (req, res, next) => {

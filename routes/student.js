@@ -6,7 +6,7 @@ const studentController = require('../controllers/student');
 
 const router = express.Router();
 
-// /api/student/:mentor_id
+// /api/student/mentor/:mentor_id
 router.get('/mentor/:mentor_id', studentController.getStudentsByMentorId);
 
 // /api/student/courses

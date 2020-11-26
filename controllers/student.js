@@ -1,4 +1,4 @@
-//import course model
+//import models
 const Student = require('../models/student');
 const Course = require('../models/course');
 

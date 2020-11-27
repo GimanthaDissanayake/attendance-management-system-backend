@@ -24,11 +24,11 @@ module.exports = class Student {
 
     static findByRegistrationNo(registrationNo) {
         //return a specific student from the database 
-        return db.execute('SELECT * FROM student WHERE student.registration_no = ?', [registrationNo]);
+        return db.execute('SELECT * FROM student WHERE registration_no = ?', [registrationNo]);
     }
 
     static findByMentorId(mentorId) {
         //return a set of students from the database by their mentor id
-        return db.execute('SELECT * FROM student WHERE student.mentor_id = ?', [mentorId]);
+        return db.execute('SELECT * FROM student WHERE mentor_id = ?', [mentorId]);
     }
 };

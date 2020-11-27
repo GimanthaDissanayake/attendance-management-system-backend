@@ -72,7 +72,7 @@ exports.getStudentsCourses = (req, res, next) => {
 
 exports.getStudent = (req, res, next) => {
     //return a specific student as response
-    const registrationNo = req.params.registration_no;
+    const registrationNo = req.body.registration_no;
     Student.findByRegistrationNo(registrationNo)
     .then(student => {
         if(!student) {

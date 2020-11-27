@@ -4,15 +4,13 @@ module.exports = class Course {
     constructor(courseCode, courseTitle) {
         this.courseCode = courseCode;
         this.courseTitle = courseTitle;
-        this.departmentId = departmentId;
+        //this.departmentId = departmentId;
     }
 
     getLevel() {
         //return the level of the course
         return this.courseCode.split('')[3];
     }
-
-    
 
     getAttendancePercentage() {
         //return the eligiblity of the course
@@ -50,5 +48,12 @@ module.exports = class Course {
     static findCurrentLevel() {
         const currentYear = new Date().getFullYear();
         return db.execute('SELECT course_code FROM course WHERE year = ?', [currentYear]);
+    }
+
+    static findAllByLecturerId(lecturerId) {
+        //return a set of courses from the database by the lecturerId
+        return db.execute('SELECT course_code, course_title FROM course WHERE course_code IN ('
+            +'SELECT course_code FROM course_offering WHERE co_id IN ('
+            +'SELECT co_id FROM teach WHERE lecturer_id =?))',[lecturerId] );
     }
 };

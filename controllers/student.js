@@ -33,6 +33,7 @@ exports.getStudentsByMentorId = (req, res, next) => {
 exports.getAllStudentsCourses = (req, res, next) => {
     //return all the courses a student follows
     const registrationNo = req.body.registration_no;
+    console.log(req.body);
     Course.findAllByStudentId(registrationNo)
     .then(courses => {
         if(!courses) {
@@ -60,6 +61,11 @@ exports.getStudentsCourses = (req, res, next) => {
             error.statusCode = 400;
             throw error; 
         }
+        courses[0].forEach(course => {
+            let c = new Course(course.course_code,course.course_title);
+            course.level = c.getLevel();
+            course.semester = c.getSemester();
+        });
         res.status(200).json({courses: courses[0]});
     })
     .catch(err => {

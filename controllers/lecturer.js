@@ -4,7 +4,6 @@ exports.getAllLecturersCourses = (req, res, next) => {
   //return all the courses a student follows
 
   const lecturerID = req.body.lecturer_id;
-  console.log(lecturerID);
   Course.findAllByLecturerId(lecturerID)
   .then(courses => {
       if(!courses) {
@@ -15,6 +14,7 @@ exports.getAllLecturersCourses = (req, res, next) => {
       courses[0].forEach(course  => {
         let c = new Course(course.course_code,course.course_title);
         course.level = c.getLevel();
+        course.semester = c.getSemester();
       });
       //console.log(courses[0]);
       res.status(200).json({courses: courses[0]});

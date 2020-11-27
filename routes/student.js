@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/mentor/:mentor_id', studentController.getStudentsByMentorId);
 
 // /api/student/courses
-router.get('/courses/', studentController.getStudentsCourses);
+router.post('/courses/', studentController.getStudentsCourses);
 
 // /api/student/all_courses
 router.get('/all_courses/', studentController.getAllStudentsCourses);

@@ -9,7 +9,12 @@ module.exports = class Course {
 
     getLevel() {
         //return the level of the course
-        return this.courseCode.split('')[3];
+        return 'Level ' + this.courseCode.split('')[3];
+    }
+
+    getSemester() {
+        //return the semester of the course
+        return 'Semester ' + this.courseCode.split('')[4];
     }
 
     getAttendancePercentage() {
@@ -32,7 +37,10 @@ module.exports = class Course {
 
     static findByStudentId(registrationNo){
         const currentYear = new Date(). getFullYear();
-        return db.execute('SELECT DISTINCT course.course_code, course.course_title FROM course, course_offering,register WHERE register.registration_no=? AND course_offering.year=? AND register.co_id=course_offering.co_id AND register.type=course_offering.type AND course.course_code=course_offering.course_code',[registrationNo, currentYear]);
+        //return db.execute('SELECT DISTINCT course.course_code, course.course_title FROM course, course_offering,register WHERE register.registration_no=? AND course_offering.year=? AND register.co_id=course_offering.co_id AND register.type=course_offering.type AND course.course_code=course_offering.course_code',[registrationNo, currentYear]);
+        return db.execute('SELECT course_code, course_title FROM course WHERE course_code IN ('+
+        'SELECT DISTINCT course_code FROM course_offering WHERE year=? AND co_id IN ('+
+        'SELECT co_id FROM register WHERE registration_no=?))',[currentYear, registrationNo]);
     }
 
     static findByCourseCode(courseCode) {

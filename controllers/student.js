@@ -100,6 +100,29 @@ exports.getStudentsCourses = (req, res, next) => {
     });
 };
 
+exports.getStudentsAttendance = (req, res, next) => {
+    //return attendance data of a student
+    const student_id = req.body.student_id;
+    const co_id = req.body.co_id;
+
+    CourseOffering.getAttendanceDetails(student_id,co_id)
+    .then(attendance => {
+        console.log(attendance[0]);
+        if(!attendance) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({attendance: attendance[0]});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
 exports.getStudent = (req, res, next) => {
     //return a specific student as response
     const registrationNo = req.body.registration_no;

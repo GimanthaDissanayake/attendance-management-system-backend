@@ -45,4 +45,9 @@ module.exports = class CourseOffering {
             next(err);
         });
     }
+
+    static getAttendanceDetails(registration_no,co_id) {
+        //return attendance details of a student in a course offering
+        return db.execute('SELECT * FROM attendance WHERE co_id=? AND student_id=?',[co_id,registration_no]);
+    }
 };

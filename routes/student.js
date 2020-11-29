@@ -12,7 +12,7 @@ router.get('/mentor/:mentor_id', studentController.getStudentsByMentorId);
 // /api/student/courses
 router.post('/courses/', studentController.getStudentsCourses);
 
-router.post('/attendance', studentController.getStudentsAttendance);
+router.post('/attendance/', studentController.getStudentsAttendance);
 
 // /api/student/all_courses
 router.get('/all_courses/', studentController.getAllStudentsCourses);

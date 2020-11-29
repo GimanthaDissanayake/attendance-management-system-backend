@@ -107,7 +107,6 @@ exports.getStudentsAttendance = (req, res, next) => {
 
     CourseOffering.getAttendanceDetails(student_id,co_id)
     .then(attendance => {
-        console.log(attendance[0]);
         if(!attendance) {
             const error = new Error('Could not find attendance data.');
             error.statusCode = 400;

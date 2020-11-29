@@ -8,15 +8,6 @@ module.exports = class Student {
         this.mentorId = mentorId;
     }
 
-    getCourses() {
-        //return all the courses the student is following
-        
-    }
-
-    getLevel() {
-        //return the level of the student
-    }
-
     static fetchAll() {
         //return all the students from the database
         return db.execute('SELECT * FROM student');
@@ -24,7 +15,7 @@ module.exports = class Student {
 
     static findByRegistrationNo(registrationNo) {
         //return a specific student from the database 
-        return db.execute('SELECT * FROM student WHERE registration_no = ?', [registrationNo]);
+        return db.execute('SELECT * FROM student INNER JOIN degree_program ON student.degree_id=degree_program.degree_id WHERE student.registration_no = ?', [registrationNo]);
     }
 
     static findByMentorId(mentorId) {

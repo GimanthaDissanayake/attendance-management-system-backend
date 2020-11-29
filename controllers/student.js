@@ -1,6 +1,7 @@
 //import models
 const Student = require('../models/student');
 const Course = require('../models/course');
+const CourseOffering = require('../models/courseOffering');
 
 exports.getStudents = (req, res, next) => {
     //return all the students as response
@@ -54,6 +55,7 @@ exports.getAllStudentsCourses = (req, res, next) => {
 exports.getStudentsCourses = (req, res, next) => {
     //return all the courses the student follows in the current year
     const registrationNo = req.body.registration_no;
+    let mappedCourses = null;
     Course.findByStudentId(registrationNo)
     .then(courses => {
         if(!courses) {
@@ -61,12 +63,34 @@ exports.getStudentsCourses = (req, res, next) => {
             error.statusCode = 400;
             throw error; 
         }
-        courses[0].forEach(course => {
+        mappedCourses = courses[0].map((course) =>{
             let c = new Course(course.course_code,course.course_title);
             course.level = c.getLevel();
             course.semester = c.getSemester();
+            return course;
         });
-        res.status(200).json({courses: courses[0]});
+        const course_ids = mappedCourses.map(mc => {return mc.co_id;});
+        
+        CourseOffering.getAttendance(registrationNo,course_ids)
+        .then((attendanceData) => {
+            mappedCourses = mappedCourses.map((course) => {
+                course.attendance_percentage = 0;
+                attendanceData.forEach(c => {
+                    if(c.co_id === course.co_id){
+                        course.attendance_percentage = c.percentage;
+                    }
+                });
+                return course;
+            });
+            return mappedCourses;
+        })
+        .then((mp) => {
+            res.status(200).json({courses: mp});
+        })
+        .catch(err => {
+            console.log('Catch '+err);
+            next(err);
+        });        
     })
     .catch(err => {
         if(!err.statusCode) {

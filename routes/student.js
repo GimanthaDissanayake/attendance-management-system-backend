@@ -16,7 +16,7 @@ router.post('/courses/', studentController.getStudentsCourses);
 router.get('/all_courses/', studentController.getAllStudentsCourses);
 
 // /api/student/registration_no/ => GET
-router.get('/registration_no/', studentController.getStudent);
+router.post('/registration_no/', studentController.getStudent);
 
 // /api/student => GET
 router.get('/', studentController.getStudents);

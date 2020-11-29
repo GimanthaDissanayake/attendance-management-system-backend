@@ -17,15 +17,6 @@ module.exports = class Course {
         return 'Semester ' + this.courseCode.split('')[4];
     }
 
-    getAttendancePercentage() {
-        //return the eligiblity of the course
-    }
-
-    // static getSemester(courseCode) {
-    //     //return the semester of the course
-    //     return courseCode.split('')[4];
-    // }
-
     static fetchAll() {
         //return all the courses from the database
         return db.execute('SELECT * FROM course');
@@ -38,9 +29,11 @@ module.exports = class Course {
     static findByStudentId(registrationNo){
         const currentYear = new Date(). getFullYear();
         //return db.execute('SELECT DISTINCT course.course_code, course.course_title FROM course, course_offering,register WHERE register.registration_no=? AND course_offering.year=? AND register.co_id=course_offering.co_id AND register.type=course_offering.type AND course.course_code=course_offering.course_code',[registrationNo, currentYear]);
-        return db.execute('SELECT course_code, course_title FROM course WHERE course_code IN ('+
-        'SELECT DISTINCT course_code FROM course_offering WHERE year=? AND co_id IN ('+
-        'SELECT co_id FROM register WHERE registration_no=?))',[currentYear, registrationNo]);
+        // return db.execute('SELECT course_code, course_title FROM course WHERE course_code IN ('+
+        // 'SELECT DISTINCT course_code FROM course_offering WHERE year=? AND co_id IN ('+
+        // 'SELECT co_id FROM register WHERE registration_no=?))',[currentYear, registrationNo]);
+        return db.execute('SELECT c.course_code, c.course_title, o.co_id, o.type FROM course c,course_offering o, register r'+
+        ' WHERE c.course_code=o.course_code AND o.co_id=r.co_id AND o.type=r.type AND o.year=? AND r.registration_no=?',[currentYear, registrationNo]);
     }
 
     static findByCourseCode(courseCode) {

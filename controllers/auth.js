@@ -39,14 +39,14 @@ exports.login = (req, res, next) => {
         if(loadedUser.role === "student") {
             //find student's name and add it to response
             Student.findByRegistrationNo(loadedUser.username)
-            .then(student => {
-                loadedUser.name = student[0][0].student_name;
-                
+            .then(student => {                
+                loadedUser.name = student[0][0].student_name;                
                 res.status(200).json({
                     token: token, 
                     name: loadedUser.name,
                     username: loadedUser.username, 
-                    role: loadedUser.role
+                    role: loadedUser.role,
+                    mahapola: student[0][0].mahapola
                 });
             }).catch(err => {
                 console.log(err);

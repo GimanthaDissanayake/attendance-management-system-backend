@@ -36,6 +36,27 @@ module.exports = class Course {
         ' WHERE c.course_code=o.course_code AND o.co_id=r.co_id AND o.type=r.type AND o.year=? AND r.registration_no=?',[currentYear, registrationNo]);
     }
 
+    static async findByIdAndDuration(registrationNo, startDate, endDate) {
+        return await db.execute('SELECT o.co_id, c.course_code,c.course_title, o.type ,COUNT(*) AS total,'+
+            'SUM(CASE WHEN status=1 then 1 else 0 end) AS present'+
+            ' FROM attendance a,course c,course_offering o WHERE a.co_id=o.co_id'+
+            ' AND o.course_code=c.course_code AND a.student_id=? AND'+
+            ' a.date_time BETWEEN ? AND ? GROUP BY o.co_id ',[registrationNo,startDate,endDate])
+        .then(result => {
+            //console.log(result[0]);
+            const attendanceData = result[0];
+            attendanceData.map(c => {
+                if(c.total && c.present)
+                    c.percentage = (100*c.present/c.total).toFixed(2);
+            });
+            return attendanceData;
+        })
+        .catch(err => {
+            console.log(err);
+            next(err);
+        });
+    }
+
     static findByCourseCode(courseCode) {
         //return a specific course from the database 
         return db.execute('SELECT * FROM course WHERE course.course_code = ?', [courseCode]);

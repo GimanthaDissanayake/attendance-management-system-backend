@@ -13,6 +13,10 @@ module.exports = class Student {
         return db.execute('SELECT * FROM student');
     }
 
+    static async getMahapola() {
+        return await db.execute('SELECT * FROM mahapola ORDER BY id DESC LIMIT 1');
+    }
+
     static findByRegistrationNo(registrationNo) {
         //return a specific student from the database 
         return db.execute('SELECT * FROM student INNER JOIN degree_program ON student.degree_id=degree_program.degree_id WHERE student.registration_no = ?', [registrationNo]);

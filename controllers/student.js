@@ -122,6 +122,45 @@ exports.getStudentsAttendance = (req, res, next) => {
     });
 };
 
+exports.getMahapolaEligibility = (req, res, next) => {
+    // return mahapola eligiblity status and time period
+    const registration_no = req.body.registration_no;
+
+    Student.getMahapola()
+    .then(mahapola => {
+        if(!mahapola) {
+            const error = new Error('Could not find mahapola data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        return mahapola[0][0];
+    })
+    .then(async mahapolaData => {
+        const start_date = mahapolaData.start_date;
+        const end_date = mahapolaData.end_date;
+        await Course.findByIdAndDuration(registration_no,start_date,end_date)
+        .then(result => {
+            result = result.map(r => {
+                r.start_date = start_date;
+                r.end_date = end_date;
+                return r;
+            });
+
+            res.status(200).json({mahapola: result});
+        })
+        .catch(er => {
+            console.log(er);
+            next(er);
+        });
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
 exports.getStudent = (req, res, next) => {
     //return a specific student as response
     const registrationNo = req.body.registration_no;

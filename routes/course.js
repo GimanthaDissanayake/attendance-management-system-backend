@@ -18,6 +18,9 @@ router.post('/registration_no/' , studentController.getAllStudentsCourses);
 // /api/course/lecturer_id/ with lecturer_id in the req.body => POST
 router.post('/lecturer_id/' , lecturerController.getAllLecturersCourses);
 
+// /api/course/timetable with id and role in the req.body => POST
+router.post('/timetable/', courseController.getTimetable);
+
 // /api/course/:course_code => GET
 router.get('/:course_code', courseController.getCourse);
 

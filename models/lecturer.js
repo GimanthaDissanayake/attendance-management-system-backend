@@ -11,4 +11,8 @@ module.exports = class Lecturer {
         //return a specific student from the database 
         return db.execute('SELECT * FROM lecturer WHERE lecturer_id = ?', [lecturerId]);
     }
+
+    static getLecturerTimetable(lecturer_id) {
+        
+    }
 };

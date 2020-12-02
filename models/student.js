@@ -26,4 +26,10 @@ module.exports = class Student {
         //return a set of students from the database by their mentor id
         return db.execute('SELECT * FROM student WHERE mentor_id = ?', [mentorId]);
     }
+
+    static getStudentTimetable(student_id) {
+        const currentYear = new Date(). getFullYear();
+        return db.execute('SELECT o.co_id,c.course_code,c.course_title,o.type,o.start_time,o.end_time,o.day_of_week FROM course c, course_offering o,register r '+
+        'WHERE o.course_code=c.course_code AND r.co_id=o.co_id AND r.registration_no=? AND o.year=?',[student_id,currentYear]);
+    }
 };

@@ -32,4 +32,8 @@ module.exports = class Student {
         return db.execute('SELECT o.co_id,c.course_code,c.course_title,o.type,o.start_time,o.end_time,o.day_of_week FROM course c, course_offering o,register r '+
         'WHERE o.course_code=c.course_code AND r.co_id=o.co_id AND r.registration_no=? AND o.year=?',[student_id,currentYear]);
     }
+
+    static findByCourseCode(courseCode){
+        return db.execute('select register.registration_no , student_name from register, student , course_offering where course_offering.co_id = register.co_id and student.registration_no = register.registration_no and course_code =?',[courseCode]);
+    }
 };

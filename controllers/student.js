@@ -180,3 +180,24 @@ exports.getStudent = (req, res, next) => {
         next(err);
     });
 };
+
+exports.getStudentsByCourseCode = (req, res, next) => {
+    //return specific student by course code
+    const CourseCode = req.body.course_code;
+    console.log(req.body);
+    Student.findByCourseCode(CourseCode)
+    .then(students => {
+        if(!students) {
+            const error = new Error('Could not find courses.');
+            error.statusCode = 400;
+            throw error; 
+        }
+        res.status(200).json({students: students[0]});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};

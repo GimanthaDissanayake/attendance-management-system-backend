@@ -78,4 +78,15 @@ module.exports = class Course {
             +'SELECT course_code FROM course_offering WHERE co_id IN ('
             +'SELECT co_id FROM teach WHERE lecturer_id =?))',[lecturerId] );
     }
+
+    static findByLecturerId(lecturerId) {
+        // return courses from database by the lecturer id
+        const d = new Date();
+       // const dayOfWeek = d.getDay(); 
+       const dayOfWeek = "3"; 
+
+        return db.execute('SELECT course_code, start_time , end_time ,type FROM course_offering WHERE day_of_week=? AND co_id IN('
+        + 'SELECT co_id FROM teach WHERE lecturer_id=?)' , [dayOfWeek,lecturerId] );
+ 
+    }
 };

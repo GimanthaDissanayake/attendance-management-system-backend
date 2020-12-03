@@ -15,6 +15,9 @@ router.post('/registration_no/' , studentController.getAllStudentsCourses);
 //request with authentication middleware
 //router.get('/registration_no/', isAuth , studentController.getAllStudentsCourses);
 
+// /api/course/course_time/ with lecturer_id in the req.body => POST
+router.post('/course_time/' , courseController.getCourseTime);
+
 // /api/course/lecturer_id/ with lecturer_id in the req.body => POST
 router.post('/lecturer_id/' , lecturerController.getAllLecturersCourses);
 

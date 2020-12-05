@@ -21,6 +21,8 @@ router.post('/course_time/' , courseController.getCourseTime);
 // /api/course/lecturer_id/ with lecturer_id in the req.body => POST
 router.post('/lecturer_id/' , lecturerController.getAllLecturersCourses);
 
+router.post('/attendance/' , courseController.getAttendanceCourse);
+
 // /api/course/timetable with id and role in the req.body => POST
 router.post('/timetable/', courseController.getTimetable);
 

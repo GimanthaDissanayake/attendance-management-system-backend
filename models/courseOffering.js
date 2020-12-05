@@ -50,4 +50,10 @@ module.exports = class CourseOffering {
         //return attendance details of a student in a course offering
         return db.execute('SELECT * FROM attendance WHERE co_id=? AND student_id=?',[co_id,registration_no]);
     }
+    
+    static getAttendanceByCoId(coId){
+        return db.execute('SELECT DISTINCT date_time FROM attendance WHERE co_id = ? ', [coId]);
+    }
+
+
 };

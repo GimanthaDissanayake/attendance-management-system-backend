@@ -1,7 +1,7 @@
 //import 3rd party libraries
-require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 
 //import the routes 
 const studentRoutes = require('./routes/student');
@@ -18,6 +18,9 @@ const app = express();
 // .catch(err => {
 //     console.log(err);
 // });
+
+//use helmet to add secure headers to node application
+app.use(helmet());
 
 //use body parser to parse json data
 app.use(bodyParser.json());
@@ -46,4 +49,4 @@ app.use((error, req, res, next) => {
 });
 
 //start the server on port 3030
-app.listen(3030);
+app.listen(process.env.PORT || 3030);

@@ -36,4 +36,10 @@ module.exports = class Student {
     static findByCourseCode(courseCode){
         return db.execute('select register.registration_no , student_name from register, student , course_offering where course_offering.co_id = register.co_id and student.registration_no = register.registration_no and course_code =?',[courseCode]);
     }
+
+    //static getAttendanceSheetDetails(coId,date){
+    //    return db.execute('select student.registration_no , student_name , status from student , attendance where attendance.student_id = student.registration_no and attendance.co_id = ? and date_time = ?',[coId,date]);
+    //}
+
+    
 };

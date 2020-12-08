@@ -201,3 +201,25 @@ exports.getStudentsByCourseCode = (req, res, next) => {
         next(err);
     });
 };
+
+exports.getStudentsAttendanceSheet = (req, res, next) => {
+    //return attendance data of a student
+    const date = req.body.date;
+    const co_id = req.body.co_id;
+
+    Student.getAttendanceSheetDetails(date,co_id)
+    .then(attendance => {
+        if(!attendance) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({attendance: attendance[0]});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};

@@ -74,7 +74,7 @@ module.exports = class Course {
 
     static findAllByLecturerId(lecturerId) {
         //return a set of courses from the database by the lecturerId
-        return db.execute('SELECT course.course_code,course_title, teach.co_id FROM course , course_offering , teach WHERE course.course_code = course_offering.course_code and teach.co_id = course_offering.co_id and lecturer_id = ?' , [lecturerId]);      
+        return db.execute('SELECT course.course_code,course.course_title,course_offering.type, teach.co_id, course_offering.start_time,course_offering.end_time,course_offering.day_of_week FROM course , course_offering , teach WHERE course.course_code = course_offering.course_code and teach.co_id = course_offering.co_id and lecturer_id = ?' , [lecturerId]);      
     }
 
     static findByLecturerId(lecturerId) {

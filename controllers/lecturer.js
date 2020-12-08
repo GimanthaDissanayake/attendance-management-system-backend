@@ -1,8 +1,7 @@
 const Course = require('../models/course');
 
 exports.getAllLecturersCourses = (req, res, next) => {
-  //return all the courses a student follows
-
+  //return all the courses a lecturer conducts
   const lecturerID = req.body.lecturer_id;
   Course.findAllByLecturerId(lecturerID)
   .then(courses => {

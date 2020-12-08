@@ -116,28 +116,28 @@ exports.getTimetable = (req, res, next) => {
     // });
 
     exports.getCourseTime = (req, res, next) => {
-        //return the time details of a course
-             const lecturerId = req.body.lecturer_id;
-             Course.findByLecturerId(lecturerId)
-             .then(courses => {
-                  if(!courses) {
-                      const error = new Error('Could not find courses.');
-                      error.statusCode = 400;
-                      throw error; 
-                  }
-                  courses[0].forEach(course  => {
-                    let c = new Course(course.course_code,course.course_title);
-                    course.level = c.getLevel();
-                  });
-                  res.status(200).json({courses: courses[0]});
-              })
-              .catch(err => {
-                  if(!err.statusCode) {
-                      err.statusCode = 500;
-                  }
-                  next(err);
-              });
-        };
+    //return the time details of a course
+        const lecturerId = req.body.lecturer_id;
+        Course.findByLecturerId(lecturerId)
+        .then(courses => {
+            if(!courses) {
+                const error = new Error('Could not find courses.');
+                error.statusCode = 400;
+                throw error; 
+            }
+            courses[0].forEach(course  => {
+            let c = new Course(course.course_code,course.course_title);
+            course.level = c.getLevel();
+            });
+            res.status(200).json({courses: courses[0]});
+        })
+        .catch(err => {
+            if(!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+    };
 
         exports.getAttendanceCourse = (req, res, next) => {
             //return attendance data of a student

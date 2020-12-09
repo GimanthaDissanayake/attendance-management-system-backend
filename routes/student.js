@@ -24,7 +24,6 @@ router.post('/markattendance/', studentController.setAttendance);
 // /api/student/attendance => POST
 router.post('/attendance_sheet/', studentController.getStudentsAttendanceSheet);
 
-
 // /api/student/all_courses => get
 router.get('/all_courses/', studentController.getAllStudentsCourses);
 

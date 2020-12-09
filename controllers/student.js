@@ -218,7 +218,7 @@ exports.setAttendance = (req, res, next) => {
             err.statusCode = 500;
         }
         next(err);
-    })
+    });
 };     
 
 exports.getStudentsAttendanceSheet = (req, res, next) => {

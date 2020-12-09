@@ -184,7 +184,6 @@ exports.getStudent = (req, res, next) => {
 exports.getStudentsByCourseCode = (req, res, next) => {
     //return specific student by course code
     const CourseCode = req.body.course_code;
-    console.log(req.body);
     Student.findByCourseCode(CourseCode)
     .then(students => {
         if(!students) {
@@ -193,6 +192,27 @@ exports.getStudentsByCourseCode = (req, res, next) => {
             throw error; 
         }
         res.status(200).json({students: students[0]});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
+exports.setAttendance = (req, res, next) => {
+    const co_id = req.body.co_id;
+    const type = req.body.type;
+    const registration_nos = req.body.registration_nos;
+    const absent_ids = req.body.absent_ids;
+    Student.insertAttendance(co_id,type,registration_nos,absent_ids)
+    .then(result => {
+        if(result[0].affectedRows>0)
+            res.status(200).json({message: 'success'});
+        else
+            res.status(200).json({message: 'not inserted'});
+        
     })
     .catch(err => {
         if(!err.statusCode) {

@@ -34,6 +34,32 @@ module.exports = class Student {
     }
 
     static findByCourseCode(courseCode){
-        return db.execute('select register.registration_no , student_name from register, student , course_offering where course_offering.co_id = register.co_id and student.registration_no = register.registration_no and course_code =?',[courseCode]);
+        return db.execute('select DISTINCT register.registration_no , student_name from register, student , course_offering where course_offering.co_id = register.co_id and student.registration_no = register.registration_no and course_code =?',[courseCode]);
+    }
+
+    static insertAttendance(co_id,type, registration_nos,absent_ids) {
+        //db.execute('INSERT INTO attendance(date_time,status) VALUES ()')
+        const length = registration_nos.length + absent_ids.length;
+        const present = registration_nos.length;
+        const ids = registration_nos.concat(absent_ids);
+        const args = [];
+        let date = new Date();
+        date = date.toISOString().slice(0, 19).replace('T', ' ');
+        let query = 'INSERT INTO attendance(date_time,status,student_id,co_id,type) VALUES ';
+        let n = 0;
+        while(n<length){
+            query += '(?,?,?,?,?),';
+            args.push(date);
+            if(n<present)
+                args.push('1');
+            else
+                args.push('0');
+            args.push(ids[n]);
+            args.push(co_id);
+            args.push(type);
+            n++;
+        }
+        query = query.slice(0,-1);
+        return db.execute(query,args);
     }
 };

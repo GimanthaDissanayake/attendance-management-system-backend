@@ -62,4 +62,9 @@ module.exports = class Student {
         query = query.slice(0,-1);
         return db.execute(query,args);
     }
+
+    static getAttendanceSheetDetails(date,coId){
+        const y = date+"%";
+        return db.execute('select student.registration_no , student_name , status from student , attendance where attendance.student_id = student.registration_no and attendance.co_id = ? and date_time like ?',[coId,y]);
+    }    
 };

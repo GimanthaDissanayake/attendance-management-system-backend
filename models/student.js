@@ -34,7 +34,7 @@ module.exports = class Student {
     }
 
     static findByCourseCode(courseCode){
-        return db.execute('select register.registration_no , student_name from register, student , course_offering where course_offering.co_id = register.co_id and student.registration_no = register.registration_no and course_code =?',[courseCode]);
+        return db.execute('select distinct register.registration_no , student_name from register, student , course_offering where course_offering.co_id = register.co_id and student.registration_no = register.registration_no and course_code =?',[courseCode]);
     }
 
     static getAttendanceSheetDetails(date,coId){

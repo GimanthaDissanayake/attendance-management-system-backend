@@ -18,7 +18,6 @@ exports.getAllLecturersCourses = (req, res, next) => {
         course.semester = c.getSemester();
         co_id_list.push(course.co_id);
       });
-      console.log(co_id_list);
       CourseOffering.getAttendanceByCoIdList(co_id_list)
       .then( result => {
         courses[0].map(c => {

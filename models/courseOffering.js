@@ -46,6 +46,27 @@ module.exports = class CourseOffering {
         });
     }
 
+    static async getAttendanceByRegNoList(registration_nos,co_id) {
+        // return attendance data
+        var tokens = new Array(registration_nos.length).fill('?').join(',');
+        let data = [];
+        data.push(co_id);
+        data = data.concat(registration_nos);
+        return await db.execute('SELECT student_id,co_id,count(*) AS total,'+ 
+        'SUM(CASE WHEN status=1 then 1 else 0 end) AS present FROM attendance WHERE co_id=? AND student_id IN ('+tokens+') GROUP BY student_id',data)
+        .then(result => {
+            const attendanceData = result[0];
+            attendanceData.map(c => {
+                if(c.total && c.present)
+                    c.percentage = (100*c.present/c.total).toFixed(2);
+            });
+            return attendanceData;
+        }).catch(err => {
+          console.log(err);
+            next(err);
+        });
+    }
+
     static getAttendanceDetails(registration_no,co_id) {
         //return attendance details of a student in a course offering
         return db.execute('SELECT * FROM attendance WHERE co_id=? AND student_id=?',[co_id,registration_no]);

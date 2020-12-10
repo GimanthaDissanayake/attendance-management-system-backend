@@ -201,6 +201,50 @@ exports.getStudentsByCourseCode = (req, res, next) => {
     });
 };
 
+exports.getStudentsByCourseId = (req, res, next) => {
+    //return specific student by course code
+    const co_id = req.body.co_id;
+    Student.findByCourseId(co_id)
+    .then(students => {
+        if(!students) {
+            const error = new Error('Could not find courses.');
+            error.statusCode = 400;
+            throw error; 
+        }
+        //console.log(students);
+        const registration_no_list = [];
+        students[0].map(s => {
+            registration_no_list.push(s.registration_no);
+        });
+        //console.log(students[0]);
+        CourseOffering.getAttendanceByRegNoList(registration_no_list,co_id)
+        .then(result => {     
+            console.log(result);       
+            students[0].forEach(s=>{
+                result.map(r=>{
+                    if(r.student_id===s.registration_no){
+                        s.percentage = r.percentage;
+                    }
+                });
+            });
+            res.status(200).json({students: students[0]});
+        })
+        .catch(err => {
+            if(!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+        
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
 exports.setAttendance = (req, res, next) => {
     const co_id = req.body.co_id;
     const type = req.body.type;

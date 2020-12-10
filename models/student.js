@@ -37,6 +37,10 @@ module.exports = class Student {
         return db.execute('select DISTINCT register.registration_no , student_name from register, student , course_offering where course_offering.co_id = register.co_id and student.registration_no = register.registration_no and course_code =?',[courseCode]);
     }
 
+    static findByCourseId(co_id) {
+        return db.execute('select DISTINCT register.registration_no , student_name from register, student , course_offering where course_offering.co_id = register.co_id and student.registration_no = register.registration_no and course_offering.co_id =?',[co_id]);
+    }
+
     static insertAttendance(co_id,type, registration_nos,absent_ids) {
         //db.execute('INSERT INTO attendance(date_time,status) VALUES ()')
         const length = registration_nos.length + absent_ids.length;

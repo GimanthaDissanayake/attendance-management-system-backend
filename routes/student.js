@@ -10,8 +10,8 @@ const router = express.Router();
 // /api/student/course_codes => POST
 router.post('/course_code/', studentController.getStudentsByCourseCode);
 
-// /api/student/mentor/:mentor_id => GET
-router.get('/mentor/:mentor_id', studentController.getStudentsByMentorId);
+// /api/student/mentor/ => POST
+router.post('/mentor/', studentController.getStudentsByMentorId);
 
 // /api/student/courses => POST
 router.post('/courses/', studentController.getStudentsCourses);

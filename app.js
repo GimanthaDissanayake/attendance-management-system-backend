@@ -8,6 +8,7 @@ const studentRoutes = require('./routes/student');
 const courseRoutes = require('./routes/course');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const alertRoutes = require('./routes/alert');
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/api/student', studentRoutes);
 app.use('/api/course', courseRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/alert', alertRoutes);
 
 //middleware to handle errors
 app.use((error, req, res, next) => {

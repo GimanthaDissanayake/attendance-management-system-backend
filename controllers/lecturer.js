@@ -1,4 +1,5 @@
 const Course = require('../models/course');
+const CourseOffering = require('../models/courseOffering');
 
 exports.getAllLecturersCourses = (req, res, next) => {
   //return all the courses a lecturer conducts
@@ -10,13 +11,38 @@ exports.getAllLecturersCourses = (req, res, next) => {
           error.statusCode = 400;
           throw error; 
       }
+      const co_id_list = [];
       courses[0].forEach(course  => {
         let c = new Course(course.course_code,course.course_title);
         course.level = c.getLevel();
         course.semester = c.getSemester();
+        co_id_list.push(course.co_id);
       });
-      //console.log(courses[0]);
-      res.status(200).json({courses: courses[0]});
+      console.log(co_id_list);
+      CourseOffering.getAttendanceByCoIdList(co_id_list)
+      .then( result => {
+        courses[0].map(c => {
+          c.total = 0;
+          c.totalPercentage = parseFloat(0.00);
+          result.forEach(r => {
+            if(c.co_id === r.co_id){
+              c.total++;
+              c.totalPercentage=c.totalPercentage + parseFloat(r.percentage);
+            }
+          });          
+          if(c.total===0)
+            c.attendance_percentage = 0;
+          else
+            c.attendance_percentage = c.totalPercentage/(c.total);
+        });
+        res.status(200).json({courses: courses[0]});
+      })
+      .catch(err => {
+        if(!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      });
   })
   .catch(err => {
       if(!err.statusCode) {

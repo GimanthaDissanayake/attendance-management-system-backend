@@ -52,8 +52,41 @@ module.exports = class CourseOffering {
     }
     
     static getAttendanceByCoId(coId){
-        return db.execute('SELECT DISTINCT date_time FROM attendance WHERE co_id = ? ', [coId]);
+        const query = 'SELECT DISTINCT CAST(date_time AS DATE) AS date_time,COUNT(*) AS total,'+
+            'SUM(CASE WHEN status=1 then 1 else 0 end) AS present from attendance WHERE'+
+            ' co_id=? group by date_time';
+        return db.execute(query, [coId])
+        .then(result => {
+            const attendanceData = result[0];
+            attendanceData.map(c => {
+                if(c.total && c.present)
+                    c.percentage = (100*c.present/c.total).toFixed(2);
+            });
+            return attendanceData;
+        }).catch(err => {
+          console.log(err);
+            next(err);
+        });
     }
 
-
+    static getAttendanceByCoIdList(coIdList){
+        var tokens = new Array(coIdList.length).fill('?').join(',');
+        // let data = [];
+        // data = data.concat(co_ids);
+        const query = 'SELECT DISTINCT CAST(date_time AS DATE) AS date_time,COUNT(*) AS total,'+
+            'SUM(CASE WHEN status=1 then 1 else 0 end) AS present,co_id from attendance WHERE'+
+            ' co_id IN ('+tokens+') group by date_time';
+        return db.execute(query, coIdList)
+        .then(result => {
+            const attendanceData = result[0];
+            attendanceData.map(c => {
+                if(c.total && c.present)
+                    c.percentage = (100*c.present/c.total).toFixed(2);
+            });
+            return attendanceData;
+        }).catch(err => {
+          console.log(err);
+            next(err);
+        });
+    }
 };

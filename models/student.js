@@ -38,7 +38,7 @@ module.exports = class Student {
     }
 
     static findByCourseId(co_id) {
-        return db.execute('select DISTINCT register.registration_no , student_name from register, student , course_offering where course_offering.co_id = register.co_id and student.registration_no = register.registration_no and course_offering.co_id =?',[co_id]);
+        return db.execute('select student.registration_no , mentor_id, lecturer_name , student_name  from register, student , lecturer where  student.registration_no = register.registration_no and lecturer.lecturer_id = student.mentor_id and register.co_id =?',[co_id]);
     }
 
     static insertAttendance(co_id,type, registration_nos,absent_ids) {

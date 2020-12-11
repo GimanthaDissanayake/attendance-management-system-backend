@@ -8,7 +8,11 @@ const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-// /api/course/registration_no/ with registration_no in the req.body => POST
+
 router.post('/receiver_id/' , alertController.getAlerts);
+
+router.post('/send_alert/' , alertController.sendAlert);
+
+router.post('/badge/' , alertController.getBadge);
 
 module.exports = router;

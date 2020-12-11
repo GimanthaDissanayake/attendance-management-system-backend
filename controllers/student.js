@@ -18,8 +18,7 @@ exports.getStudents = (req, res, next) => {
 
 exports.getStudentsByMentorId = (req, res, next) => {
     //return all the students with the passed mentor id
-    const mentorId = req.params.mentor_id;
-    console.log(req.params);
+    const mentorId = req.body.mentor_id;
     Student.findByMentorId(mentorId).then(students => {
         res.status(200).json({students: students[0]});
     })

@@ -13,8 +13,8 @@ router.post('/course_code/', studentController.getStudentsByCourseCode);
 // /api/student/co_id => POST
 router.post('/co_id/', studentController.getStudentsByCourseId);
 
-// /api/student/mentor/:mentor_id => GET
-router.get('/mentor/:mentor_id', studentController.getStudentsByMentorId);
+// /api/student/mentor/ => POST
+router.post('/mentor/', studentController.getStudentsByMentorId);
 
 // /api/student/courses => POST
 router.post('/courses/', studentController.getStudentsCourses);

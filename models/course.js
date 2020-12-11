@@ -22,8 +22,8 @@ module.exports = class Course {
         return db.execute('SELECT * FROM course');
     }
 
-    static findAllByStudentId(registrationNo) {
-        return db.execute('SELECT DISTINCT course.course_code, course.course_title FROM course, course_offering,register WHERE register.registration_no=? AND register.co_id=course_offering.co_id AND register.type=course_offering.type AND course.course_code=course_offering.course_code',[registrationNo]);
+    static async findAllByStudentId(registrationNo) {
+        return await db.execute('SELECT DISTINCT course.course_code, course.course_title FROM course, course_offering,register WHERE register.registration_no=? AND register.co_id=course_offering.co_id AND register.type=course_offering.type AND course.course_code=course_offering.course_code',[registrationNo]);
     }
 
     static findByStudentId(registrationNo){

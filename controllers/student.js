@@ -16,11 +16,43 @@ exports.getStudents = (req, res, next) => {
     });    
 };
 
-exports.getStudentsByMentorId = (req, res, next) => {
+exports.getStudentsByMentorId = async(req, res, next) => {
     //return all the students with the passed mentor id
     const mentorId = req.body.mentor_id;
     Student.findByMentorId(mentorId).then(students => {
-        res.status(200).json({students: students[0]});
+        // const registration_nos = students[0].map(s=>{
+        //     return s.registration_no;
+        // });
+        // console.log(registration_nos);
+        // students[0].map(s=>{
+        //     Course.findAllByStudentId(s.registration_no)
+        //     .then(courses => {
+        //         if(!courses) {
+        //             const error = new Error('Could not find courses.');
+        //             error.statusCode = 400;
+        //             throw error; 
+        //         }
+        //         s.courses = courses[0];
+        //     });
+        // });
+        // const studentsList = students[0];
+        // studentsList.map(s=>{
+        //     const courses = Course.findAllByStudentId(s.registration_no);
+        //     console.log(courses);
+        //     s.courses = courses[0];
+        //     return s;
+        // });
+        const currentYear = new Date().getFullYear();
+        
+        const studentsList = students[0].map(s=>{
+            if(s.mahapola===0)
+                s.hasMahapola='No';
+            else
+                s.hasMahapola='Yes';
+            s.level ='Level '+s.course_code.split('')[3];
+            return s;
+        });
+        res.status(200).json({students: studentsList});
     })
     .catch(err =>{
         if(!err.statusCode) {

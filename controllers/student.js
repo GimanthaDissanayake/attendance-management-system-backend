@@ -73,7 +73,7 @@ exports.getStudentsByMentorId = async(req, res, next) => {
 exports.getAllStudentsCourses = (req, res, next) => {
     //return all the courses a student follows
     const registrationNo = req.body.registration_no;
-    console.log(req.body);
+    //console.log(req.body);
     Course.findAllByStudentId(registrationNo)
     .then(courses => {
         if(!courses) {
@@ -258,7 +258,7 @@ exports.getStudentsByCourseId = (req, res, next) => {
         //console.log(students[0]);
         CourseOffering.getAttendanceByRegNoList(registration_no_list,co_id)
         .then(result => {     
-            console.log(result);       
+            //console.log(result);       
             students[0].forEach(s=>{
                 result.map(r=>{
                     if(r.student_id===s.registration_no){

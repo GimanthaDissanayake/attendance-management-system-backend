@@ -9,7 +9,11 @@ const isAuth = require('../middleware/is-auth');
 const router = express.Router();
 
 
-router.post('/receiver_id/' , alertController.getAlerts);
+router.post('/receiver_id_Old/' , alertController.getAlertsOld);
+
+router.post('/receiver_id_New/' , alertController.getAlertsNew);
+
+router.post('/reset_read/' , alertController.resetReadAlerts);
 
 router.post('/send_alert/' , alertController.sendAlert);
 

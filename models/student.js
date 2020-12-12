@@ -87,7 +87,24 @@ module.exports = class Student {
     static getAbsentDays(username){
         return db.execute('SELECT COUNT(attendance_id) AS count FROM attendance WHERE student_id = ? AND status = 0',[username]);
     }
-    
 
+    static getTotalCourses(username){
+        return db.execute('SELECT COUNT(DISTINCT teach.co_id) AS count FROM course_offering,teach where course_offering.co_id = teach.co_id AND year = YEAR(CURDATE()) AND lecturer_id =?',[username]);
+    } 
     
+    static getTotalConducted(username){
+        return db.execute('SELECT COUNT(DISTINCT substring(date_time ,1,10)) AS count FROM teach,attendance,course_offering WHERE attendance.co_id = teach.co_id AND course_offering.co_id = attendance.co_id AND year = YEAR(CURDATE()) AND lecturer_id =?',[username]);
+    } 
+
+    static getTotalMentoring(username){
+        return db.execute('SELECT COUNT(registration_no) AS count FROM student WHERE mentor_id =?',[username]);
+    } 
+
+    static getTotalDepCourses(username){
+        return db.execute('SELECT COUNT(DISTINCT course.course_code) AS count FROM course, department, course_offering WHERE course.course_code = course_offering.course_code AND course.department_id = department.department_id AND year = YEAR(CURDATE()) AND department_head =?',[username]);
+    }
+
+    static getTotalDepDays(username){
+        return db.execute('SELECT COUNT(DISTINCT substring(date_time ,1,10)) AS count FROM course, department,attendance, course_offering WHERE course_offering.co_id = attendance.co_id AND course.course_code = course_offering.course_code AND course.department_id = department.department_id AND department_head =?',[username]);
+    }   
 };

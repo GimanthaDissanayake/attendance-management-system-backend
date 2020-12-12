@@ -32,5 +32,4 @@ router.get('/:course_code', courseController.getCourse);
 // /api/course => GET
 router.get('/', courseController.getCourses);
 
-
 module.exports = router;

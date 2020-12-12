@@ -318,7 +318,6 @@ exports.getStudentsAttendanceSheet = (req, res, next) => {
     });
 };
 
-
 exports.getRegisteredStudent = (req, res, next) => {
     const username = req.body.username;
     Student.getRegisteredStudent(username)
@@ -394,5 +393,107 @@ exports.getAbsentDays = (req, res, next) => {
         next(err);
     });
 };
+
+exports.getTotalCourses = (req, res, next) => {
+    const username = req.body.username;
+    Student.getTotalCourses(username)
+    
+    .then(count => {
+        if(!count) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({count: count});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
+exports.getTotalConducted = (req, res, next) => {
+    const username = req.body.username;
+    Student.getTotalConducted(username)
+    
+    .then(count => {
+        if(!count) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({count: count});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
+exports.getTotalMentoring = (req, res, next) => {
+    const username = req.body.username;
+    Student.getTotalMentoring(username)
+    
+    .then(count => {
+        if(!count) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({count: count});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
+exports.getTotalDepCourses = (req, res, next) => {
+    const username = req.body.username;
+    Student.getTotalDepCourses(username)
+    
+    .then(count => {
+        if(!count) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({count: count});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
+exports.getTotalDepDays = (req, res, next) => {
+    const username = req.body.username;
+    Student.getTotalDepDays(username)
+    
+    .then(count => {
+        if(!count) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({count: count});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
+
 
 

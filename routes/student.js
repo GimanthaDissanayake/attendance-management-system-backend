@@ -48,4 +48,14 @@ router.post('/present_days/', studentController.getPresentDays);
 
 router.post('/absent_days/', studentController.getAbsentDays);
 
+router.post('/total_courses/', studentController.getTotalCourses);
+
+router.post('/total_conducted/', studentController.getTotalConducted);
+
+router.post('/total_mentoring/', studentController.getTotalMentoring);
+
+router.post('/total_dep_courses/', studentController.getTotalDepCourses);
+
+router.post('/total_dep_days/', studentController.getTotalDepDays);
+
 module.exports = router;

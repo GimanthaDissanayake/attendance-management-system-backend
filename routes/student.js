@@ -39,4 +39,13 @@ router.post('/mahapola/', studentController.getMahapolaEligibility);
 // /api/student => GET
 router.get('/', studentController.getStudents);
 
+//counts for dashboard
+router.post('/registered_student/', studentController.getRegisteredStudent);
+
+router.post('/lecturer_days/', studentController.getLecturerDays);
+
+router.post('/present_days/', studentController.getPresentDays);
+
+router.post('/absent_days/', studentController.getAbsentDays);
+
 module.exports = router;

@@ -70,5 +70,24 @@ module.exports = class Student {
     static getAttendanceSheetDetails(date,coId){
         const y = date+"%";
         return db.execute('select student.registration_no , student_name , status from student , attendance where attendance.student_id = student.registration_no and attendance.co_id = ? and date_time like ?',[coId,y]);
-    }    
+    }
+
+    static getRegisteredStudent(username){
+        return db.execute('SELECT COUNT(DISTINCT course_code) AS count FROM course_offering , register WHERE course_offering.co_id = register.co_id AND registration_no = ?',[username]);
+    }
+
+    static getLecturerDays(username){
+        return db.execute('SELECT COUNT(DISTINCT substring(date_time ,1,10)) AS count FROM attendance WHERE student_id = ?',[username]);
+    }
+
+    static getPresentDays(username){
+        return db.execute('SELECT COUNT(attendance_id) AS count FROM attendance WHERE student_id = ? AND status = 1',[username]);
+    }
+
+    static getAbsentDays(username){
+        return db.execute('SELECT COUNT(attendance_id) AS count FROM attendance WHERE student_id = ? AND status = 0',[username]);
+    }
+    
+
+    
 };

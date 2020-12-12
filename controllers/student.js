@@ -317,3 +317,82 @@ exports.getStudentsAttendanceSheet = (req, res, next) => {
         next(err);
     });
 };
+
+
+exports.getRegisteredStudent = (req, res, next) => {
+    const username = req.body.username;
+    Student.getRegisteredStudent(username)
+    .then(count => {
+        if(!count) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({count: count});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
+exports.getLecturerDays = (req, res, next) => {
+    const username = req.body.username;
+    Student.getLecturerDays(username)
+    .then(count => {
+        if(!count) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({count: count});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
+exports.getPresentDays = (req, res, next) => {
+    const username = req.body.username;
+    Student.getPresentDays(username)
+    .then(count => {
+        if(!count) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({count: count});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
+exports.getAbsentDays = (req, res, next) => {
+    const username = req.body.username;
+    Student.getAbsentDays(username)
+    .then(count => {
+        if(!count) {
+            const error = new Error('Could not find attendance data.');
+            error.statusCode = 400;
+            throw error;
+        }
+        res.status(200).json({count: count});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+};
+
+

@@ -1,5 +1,6 @@
 const Course = require('../models/course');
 const CourseOffering = require('../models/courseOffering');
+const Lecturer = require('../models/lecturer');
 
 exports.getAllLecturersCourses = (req, res, next) => {
   //return all the courses a lecturer conducts
@@ -49,6 +50,25 @@ exports.getAllLecturersCourses = (req, res, next) => {
       }
       next(err);
   });
+};
+
+exports.getDepartmentId = (req,res,next) => {
+  const hod_id = req.body.hod_id;
+  Lecturer.getDepartmentId(hod_id)
+  .then(result => {
+    if(!result){
+      const error = new Error('Could not find department id.');
+        error.statusCode = 400;
+        throw error; 
+    }
+    res.status(200).json({departmentId: result[0]});
+  })
+  .catch(err => {
+    if(!err.statusCode) {
+        err.statusCode = 500;
+    }
+    next(err);
+});
 };
 
 

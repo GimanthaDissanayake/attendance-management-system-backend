@@ -12,6 +12,11 @@ module.exports = class Lecturer {
         return db.execute('SELECT * FROM lecturer WHERE lecturer_id = ?', [lecturerId]);
     }
 
+    static getDepartmentId(hodId) {
+        //return department id from database
+        return db.execute('SELECT department_id FROM department WHERE department_head=?',[hodId]);
+    }
+
     static getLecturerTimetable(lecturer_id) {
         const currentYear = new Date(). getFullYear();
         return db.execute('SELECT o.co_id,c.course_code,c.course_title,o.type,o.start_time,o.end_time,o.day_of_week FROM course c, course_offering o,teach r '+

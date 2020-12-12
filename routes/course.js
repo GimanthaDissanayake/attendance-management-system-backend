@@ -26,6 +26,9 @@ router.post('/attendance/' , courseController.getAttendanceCourse);
 // /api/course/timetable with id and role in the req.body => POST
 router.post('/timetable/', courseController.getTimetable);
 
+// /api/course/department/ with department_id in the req.body => POST
+router.post('/department/', courseController.getAllCoursesByDept);
+
 // /api/course/:course_code => GET
 router.get('/:course_code', courseController.getCourse);
 

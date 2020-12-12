@@ -11,9 +11,9 @@ module.exports = class CourseOffering {
         this.course_code = course_code;
     }
 
-    static fetchAll() {
+    static fetchAll(dep_id) {
         //return all the course offerings from the database
-        return db.execute('SELECT * FROM course_offering');
+        return db.execute('SELECT * FROM course_offering,course WHERE course_offering.course_code=course.course_code AND course.department_id=? GROUP BY course_offering.co_id',[dep_id]);
     }
 
     static findByCourseCode(co_id) {

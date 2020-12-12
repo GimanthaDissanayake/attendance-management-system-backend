@@ -6,7 +6,15 @@ const CourseOffering = require('../models/courseOffering');
 exports.getStudents = (req, res, next) => {
     //return all the students as response
     Student.fetchAll().then(students => {
-        res.status(200).json({students: students[0]});
+        const studentsList = students[0].map(s=>{
+            if(s.mahapola===0)
+                s.hasMahapola='No';
+            else
+                s.hasMahapola='Yes';
+            s.level ='Level '+s.course_code.split('')[3];
+            return s;
+        });
+        res.status(200).json({students: studentsList});
     })
     .catch(err => {
         if(!err.statusCode) {

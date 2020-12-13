@@ -36,16 +36,17 @@ router.post('/registration_no/', studentController.getStudent);
 // /api/student/mahapola/ => POST
 router.post('/mahapola/', studentController.getMahapolaEligibility);
 
-// /api/student => GET
-router.get('/', studentController.getStudents);
-
 //counts for dashboard
 router.post('/registered_student/', studentController.getRegisteredStudent);
-
 router.post('/lecturer_days/', studentController.getLecturerDays);
-
 router.post('/present_days/', studentController.getPresentDays);
-
 router.post('/absent_days/', studentController.getAbsentDays);
+
+// /api/student/everyone/ => GET
+router.get('/everyone/', studentController.getAllStudents);
+
+// /api/student/ => GET
+router.get('/', studentController.getStudents);
+
 
 module.exports = router;

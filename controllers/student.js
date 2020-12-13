@@ -5,7 +5,7 @@ const CourseOffering = require('../models/courseOffering');
 
 exports.getStudents = (req, res, next) => {
     //return all the students as response
-    Student.fetchAll().then(students => {
+    Student.fetchAllFromDepartment().then(students => {
         const studentsList = students[0].map(s=>{
             if(s.mahapola===0)
                 s.hasMahapola='No';
@@ -23,6 +23,19 @@ exports.getStudents = (req, res, next) => {
         next(err);
     });    
 };
+
+exports.getAllStudents = (req, res, next) => {
+    //return all the students as response
+    Student.fetchAll().then(students => {
+        res.status(200).json({students: students[0]});
+    })
+    .catch(err => {
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }); 
+};   
 
 exports.getStudentsByMentorId = async(req, res, next) => {
     //return all the students with the passed mentor id

@@ -9,6 +9,10 @@ module.exports = class Student {
     }
 
     static fetchAll() {
+        return db.execute('SELECT * FROM student');
+    }
+
+    static fetchAllFromDepartment() {
         //return all the students from the database
         return db.execute('SELECT student.registration_no,student.student_name,degree_program.degree_name,student.mahapola,course_offering.course_code,MAX(course_offering.year) FROM student,register,course_offering,degree_program WHERE student.registration_no=register.registration_no AND register.co_id=course_offering.co_id AND student.degree_id=degree_program.degree_id GROUP BY student.registration_no');
     }

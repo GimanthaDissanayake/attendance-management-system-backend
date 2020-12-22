@@ -20,9 +20,9 @@ module.exports = class Alert {
         return db.execute('INSERT INTO alert(date_time,message,receiver_type,receiver_id,is_read,lecturer_id) VALUES (? ,?, ?, ?,?,?)',[date,message,receiver,userId,is_read,userName]);
     }
 
-    static resetAlert(userName){
+    static resetAlert(userName,alertId){
         const is_read = 1;
-        return db.execute('UPDATE alert SET is_read = ? WHERE receiver_id= ?',[is_read,userName]);
+        return db.execute('UPDATE alert SET is_read = ? WHERE receiver_id= ? AND alert_id = ?' ,[is_read,userName,alertId]);
     }
 
     static getBadgeNumber(userId) {

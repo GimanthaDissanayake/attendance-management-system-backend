@@ -67,8 +67,8 @@ exports.sendAlert = (req, res, next) => {
 
   exports.resetReadAlerts = (req, res, next) => {
     const userName = req.body.username;
-    console.log(userName)
-    Alert.resetAlert(userName)
+    const alertId = req.body.alert_id;
+    Alert.resetAlert(userName,alertId)
     .then(result => {
         if(result[0].affectedRows>0)
             res.status(200).json({message: 'success'});

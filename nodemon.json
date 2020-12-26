@@ -1,0 +1,11 @@
+{
+    "env": {
+        "DB_HOST": "final-project.cor08ojmov4v.ap-southeast-1.rds.amazonaws.com",
+        "DB_USERNAME": "admin",
+        "DB_PASSWORD": "TZi5BblMvSjNlph5VaWi",
+        "DB_SCHEMA": "ams",
+        "DB_PORT": "3306",
+        "JWT_SECRET": "secretkey",
+        "JWT_EXPIRES_IN": "1h"
+    }
+}

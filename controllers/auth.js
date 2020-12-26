@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 
 //import models
 const User = require('../models/user');
+const Student = require('../models/student');
+const Lecturer = require('../models/lecturer');
 
 exports.login = (req, res, next) => {
     const username = req.body.username;
@@ -34,9 +36,54 @@ exports.login = (req, res, next) => {
             process.env.JWT_SECRET, 
             {expiresIn: process.env.JWT_EXPIRES_IN}
         );
-        res.status(200).json({token: token, username: loadedUser.username, role: loadedUser.role});
+        if(loadedUser.role === "student") {
+            //find student's name and add it to response
+            Student.findByRegistrationNo(loadedUser.username)
+            .then(student => {                
+                loadedUser.name = student[0][0].student_name;                
+                res.status(200).json({
+                    token: token, 
+                    name: loadedUser.name,
+                    username: loadedUser.username, 
+                    role: loadedUser.role,
+                    mahapola: student[0][0].mahapola
+                });
+            }).catch(err => {
+                console.log(err);
+                next(err);
+            });
+        } else if (loadedUser.role === "admin") {
+            //add Administrator to the response
+            loadedUser.name = "Administrator";
+            res.status(200).json({
+                token: token, 
+                name: loadedUser.name,
+                username: loadedUser.username, 
+                role: loadedUser.role
+            });
+        } else {
+            //find name from lecturer   
+            Lecturer.findById(loadedUser.username)
+            .then(lecturer => {
+                loadedUser.name = lecturer[0][0].lecturer_name;
+
+                res.status(200).json({
+                    token: token, 
+                    name: loadedUser.name,
+                    username: loadedUser.username, 
+                    role: loadedUser.role
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                next();
+            });
+        }
     })
     .catch(err => {
-
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
     });
 };

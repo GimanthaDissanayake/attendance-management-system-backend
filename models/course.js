@@ -32,7 +32,7 @@ module.exports = class Course {
         // return db.execute('SELECT course_code, course_title FROM course WHERE course_code IN ('+
         // 'SELECT DISTINCT course_code FROM course_offering WHERE year=? AND co_id IN ('+
         // 'SELECT co_id FROM register WHERE registration_no=?))',[currentYear, registrationNo]);
-        return db.execute('SELECT c.course_code, c.course_title, o.co_id, o.type FROM course c,course_offering o, register r'+
+        return db.execute('SELECT c.course_code, c.course_title, o.co_id, o.type, o.year FROM course c,course_offering o, register r'+
         ' WHERE c.course_code=o.course_code AND o.co_id=r.co_id AND o.type=r.type AND o.year=? AND r.registration_no=?',[currentYear, registrationNo]);
     }
 

@@ -105,9 +105,6 @@ module.exports = class CourseOffering {
                     c.percentage = (100*c.present/c.total).toFixed(2);
             });
             return attendanceData;
-        }).catch(err => {
-          console.log(err);
-            next(err);
         });
     }
 };

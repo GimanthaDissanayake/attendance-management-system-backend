@@ -37,11 +37,12 @@ module.exports = class Course {
     }
 
     static async findByIdAndDuration(registrationNo, startDate, endDate) {
+        const currentYear = new Date().getFullYear();
         return await db.execute('SELECT o.co_id, c.course_code,c.course_title, o.type ,COUNT(*) AS total,'+
             'SUM(CASE WHEN status=1 then 1 else 0 end) AS present'+
             ' FROM attendance a,course c,course_offering o WHERE a.co_id=o.co_id'+
-            ' AND o.course_code=c.course_code AND a.student_id=? AND'+
-            ' a.date_time BETWEEN ? AND ? GROUP BY o.co_id ',[registrationNo,startDate,endDate])
+            ' AND o.course_code=c.course_code AND o.year=? AND a.student_id=? AND'+
+            ' a.date_time BETWEEN ? AND ? GROUP BY o.co_id ',[currentYear,registrationNo,startDate,endDate])
         .then(result => {
             //console.log(result[0]);
             const attendanceData = result[0];
@@ -75,6 +76,12 @@ module.exports = class Course {
     static findAllByLecturerId(lecturerId) {
         //return a set of courses from the database by the lecturerId
         return db.execute('SELECT course.course_code,course.course_title,course_offering.type, teach.co_id, course_offering.start_time,course_offering.end_time,course_offering.day_of_week,course_offering.year FROM course , course_offering , teach WHERE course.course_code = course_offering.course_code and teach.co_id = course_offering.co_id and lecturer_id = ?' , [lecturerId]);      
+    }
+
+    static findCurrentByLecturerId(lecturerId) {
+        const currentYear = new Date().getFullYear();
+        //return a set of courses from the database by the lecturerId
+        return db.execute('SELECT course.course_code,course.course_title,course_offering.type, teach.co_id, course_offering.start_time,course_offering.end_time,course_offering.day_of_week,course_offering.year FROM course , course_offering , teach WHERE course.course_code = course_offering.course_code and teach.co_id = course_offering.co_id and course_offering.year = ? and lecturer_id = ?' , [currentYear,lecturerId]);      
     }
 
     static findByLecturerId(lecturerId) {

@@ -197,7 +197,6 @@ exports.getMahapolaEligibility = (req, res, next) => {
                 r.end_date = end_date;
                 return r;
             });
-
             res.status(200).json({mahapola: result});
         })
         .catch(er => {

@@ -52,6 +52,33 @@ exports.getAllLecturersCourses = (req, res, next) => {
   });
 };
 
+exports.getAllLecturersCurrentCourses = (req, res, next) => {
+  //return all the courses a lecturer conducts
+  const lecturerID = req.body.lecturer_id;
+  Course.findCurrentByLecturerId(lecturerID)
+  .then(courses => {
+      if(!courses) {
+          const error = new Error('Could not find courses.');
+          error.statusCode = 400;
+          throw error; 
+      }
+      const co_id_list = [];
+      courses[0].forEach(course  => {
+        let c = new Course(course.course_code,course.course_title);
+        course.level = c.getLevel();
+        course.semester = c.getSemester();
+        co_id_list.push(course.co_id);
+      });
+      res.status(200).json({courses: courses[0]});
+  })
+  .catch(err => {
+      if(!err.statusCode) {
+          err.statusCode = 500;
+      }
+      next(err);
+  });
+};
+
 exports.getDepartmentId = (req,res,next) => {
   const hod_id = req.body.hod_id;
   Lecturer.getDepartmentId(hod_id)

@@ -5,11 +5,12 @@ const express = require('express');
 //import user model and auth controller
 const adminController = require('../controllers/admin');
 const lecturerController = require('../controllers/lecturer');
+const isAuth = require('../middleware/is-auth');
 
 const router = express();
 
 // /api/admin/mahapola/ with username and password in the body => POST
-router.post('/mahapola/', adminController.setMahapolaDuration);
+router.post('/mahapola/', isAuth, adminController.setMahapolaDuration);
 
 // /api/admin/department/ with hod_id in the body => POST
 router.post('/department/', lecturerController.getDepartmentId);

@@ -4,11 +4,14 @@ const express = require('express');
 //import student controller
 const studentController = require('../controllers/student');
 
+//import authentication controller
+const isAuth = require('../middleware/is-auth');
+
 const router = express.Router();
 
 
 // /api/student/course_codes => POST
-router.post('/course_code/', studentController.getStudentsByCourseCode);
+router.post('/course_code/', isAuth, studentController.getStudentsByCourseCode);
 
 // /api/student/co_id => POST
 router.post('/co_id/', studentController.getStudentsByCourseId);
@@ -17,7 +20,7 @@ router.post('/co_id/', studentController.getStudentsByCourseId);
 router.post('/mentor/', studentController.getStudentsByMentorId);
 
 // /api/student/courses => POST
-router.post('/courses/', studentController.getStudentsCourses);
+router.post('/courses/', isAuth, studentController.getStudentsCourses);
 
 // /api/student/attendance => POST
 router.post('/attendance/', studentController.getStudentsAttendance);
@@ -48,7 +51,7 @@ router.post('/total_dep_courses/', studentController.getTotalDepCourses);
 router.post('/total_dep_days/', studentController.getTotalDepDays);
 
 // /api/student/everyone/ => GET
-router.get('/everyone/', studentController.getAllStudents);
+router.get('/everyone/', isAuth, studentController.getAllStudents);
 
 // /api/student/ => GET
 router.get('/', studentController.getStudents);

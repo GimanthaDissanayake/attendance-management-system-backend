@@ -77,19 +77,19 @@ module.exports = class Student {
     }
 
     static getRegisteredStudent(username){
-        return db.execute('SELECT COUNT(DISTINCT course_code) AS count FROM course_offering , register WHERE course_offering.co_id = register.co_id AND registration_no = ?',[username]);
+        return db.execute('SELECT COUNT(DISTINCT course_code) AS count FROM course_offering , register WHERE course_offering.co_id = register.co_id AND year = YEAR(CURDATE()) AND registration_no = ?',[username]);
     }
 
     static getLecturerDays(username){
-        return db.execute('SELECT COUNT(DISTINCT substring(date_time ,1,10)) AS count FROM attendance WHERE student_id = ?',[username]);
+        return db.execute('SELECT COUNT(DISTINCT substring(date_time ,1,10)) AS count FROM attendance WHERE YEAR(date_time) = YEAR(CURDATE()) AND student_id = ?',[username]);
     }
 
     static getPresentDays(username){
-        return db.execute('SELECT COUNT(attendance_id) AS count FROM attendance WHERE student_id = ? AND status = 1',[username]);
+        return db.execute('SELECT COUNT(attendance_id) AS count FROM attendance WHERE YEAR(date_time) = YEAR(CURDATE()) AND student_id = ? AND status = 1',[username]);
     }
 
     static getAbsentDays(username){
-        return db.execute('SELECT COUNT(attendance_id) AS count FROM attendance WHERE student_id = ? AND status = 0',[username]);
+        return db.execute('SELECT COUNT(attendance_id) AS count FROM attendance WHERE YEAR(date_time) = YEAR(CURDATE()) AND student_id = ? AND status = 0',[username]);
     }
 
     static getTotalCourses(username){
@@ -109,6 +109,7 @@ module.exports = class Student {
     }
 
     static getTotalDepDays(username){
-        return db.execute('SELECT COUNT(DISTINCT substring(date_time ,1,10)) AS count FROM course, department,attendance, course_offering WHERE course_offering.co_id = attendance.co_id AND course.course_code = course_offering.course_code AND course.department_id = department.department_id AND department_head =?',[username]);
+        const currentYear = new Date(). getFullYear();
+        return db.execute('SELECT COUNT(DISTINCT substring(date_time ,1,10)) AS count FROM course, department,attendance, course_offering WHERE course_offering.co_id = attendance.co_id AND course.course_code = course_offering.course_code AND course.department_id = department.department_id AND course_offering.year=? AND department_head =?',[currentYear,username]);
     }   
 };

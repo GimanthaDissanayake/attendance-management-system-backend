@@ -33,7 +33,7 @@ exports.getAllLecturersCourses = (req, res, next) => {
           if(c.total===0)
             c.attendance_percentage = 0;
           else
-            c.attendance_percentage = c.totalPercentage/(c.total);
+            c.attendance_percentage = (c.totalPercentage/(c.total)).toFixed(2);
         });
         res.status(200).json({courses: courses[0]});
       })
